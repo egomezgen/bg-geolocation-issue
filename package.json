@@ -1,0 +1,25 @@
+{
+	"name": "bg-geolocation-minimal-repro",
+	"version": "1.0.0",
+	"description": "Minimal reproduction of react-native-background-geolocation setup",
+	"main": "index.js",
+	"scripts": {
+		"android": "react-native run-android",
+		"ios": "react-native run-ios",
+		"start": "react-native start"
+	},
+	"dependencies": {
+		"react": "19.0.0",
+		"react-native": "0.79.2",
+		"react-native-background-geolocation": "5.0.3",
+		"react-native-permissions": "5.4.1"
+	},
+	"devDependencies": {
+		"@react-native/babel-preset": "0.79.2",
+		"@react-native/metro-config": "0.79.2",
+		"@react-native/typescript-config": "0.79.2",
+		"@types/react": "^19.0.0",
+		"typescript": "5.0.4",
+		"@react-native-community/cli": "18.0.0"
+	}
+}

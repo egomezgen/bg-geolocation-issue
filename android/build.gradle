@@ -1,0 +1,26 @@
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0"
+        minSdkVersion = 24
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.0.21"
+
+        // Added by react-native-background-geolocation
+        // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/help/INSTALL-ANDROID-AUTO.md#gradle-configuration
+        appCompatVersion 	= "1.4.2"
+        playServicesLocationVersion = "21.3.0" 
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"
