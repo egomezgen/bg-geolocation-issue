@@ -16,9 +16,7 @@ export const useSetupLocationTracking = () => {
 	const [isReady, setIsReady] = useState(false);
 	const [locationPermission, setLocationPermission] =
 		useState<string>("unknown");
-	const [motionPermission, setMotionPermission] = useState<boolean | null>(
-		null,
-	);
+	const [motionPermission, setMotionPermission] = useState<boolean | null>(null);
 
 	const { addEntry } = useLocationHistory();
 
@@ -112,16 +110,16 @@ export const useSetupLocationTracking = () => {
 				});
 
 				switch (event.status) {
-					case BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS:
+					case BackgroundGeolocation.AuthorizationStatus.Always:
 						setLocationPermission("always");
 						break;
-					case BackgroundGeolocation.AUTHORIZATION_STATUS_WHEN_IN_USE:
+					case BackgroundGeolocation.AuthorizationStatus.WhenInUse:
 						setLocationPermission("foreground");
 						break;
-					case BackgroundGeolocation.AUTHORIZATION_STATUS_DENIED:
+					case BackgroundGeolocation.AuthorizationStatus.Denied:
 						setLocationPermission("blocked");
 						break;
-					case BackgroundGeolocation.AUTHORIZATION_STATUS_NOT_DETERMINED:
+					case BackgroundGeolocation.AuthorizationStatus.NotDetermined:
 						setLocationPermission("unknown");
 						break;
 					default:
@@ -221,10 +219,5 @@ export const useSetupLocationTracking = () => {
 		refreshMotionPermission();
 	}, [isReady, refreshMotionPermission]);
 
-	return {
-		isReady,
-		locationPermission,
-		motionPermission,
-		refreshMotionPermission,
-	};
+	return { isReady, locationPermission, motionPermission, refreshMotionPermission };
 };
