@@ -11,7 +11,7 @@
 	"dependencies": {
 		"react": "19.0.0",
 		"react-native": "0.79.2",
-		"react-native-background-geolocation": "5.0.3",
+		"react-native-background-geolocation": "4.19.4",
 		"react-native-permissions": "5.4.1"
 	},
 	"devDependencies": {

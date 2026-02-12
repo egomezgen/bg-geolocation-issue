@@ -10,7 +10,7 @@ buildscript {
         // Added by react-native-background-geolocation
         // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/help/INSTALL-ANDROID-AUTO.md#gradle-configuration
         appCompatVersion 	= "1.4.2"
-        playServicesLocationVersion = "21.3.0" 
+        googlePlayServicesLocationVersion = "21.0.1"
     }
     repositories {
         google()
@@ -20,6 +20,19 @@ buildscript {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+}
+
+allprojects {
+    repositories {
+        // Required for react-native-background-geolocation
+        maven { url("${project(':react-native-background-geolocation').projectDir}/libs") }
+        maven { url 'https://developer.huawei.com/repo/' }
+        
+        // Required for react-native-background-fetch without requiring a Gradle subproject.
+        maven {
+            url("$rootDir/../node_modules/react-native-background-fetch/android/libs")
+        }
     }
 }
 

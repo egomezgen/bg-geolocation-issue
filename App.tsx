@@ -17,7 +17,6 @@ import {
 	useLocationHistory,
 	type LocationEntry,
 } from "./contexts/LocationHistoryContext";
-import { useForegroundLocationWatch } from "./hooks/use-foreground-location-watch";
 import { useSetupLocationTracking } from "./hooks/use-setup-location-tracking";
 
 function formatDateTime(iso: string): string {
@@ -79,8 +78,6 @@ function App(): React.JSX.Element {
 		isReady &&
 		locationPermission !== "blocked" &&
 		locationPermission !== "unknown";
-
-	useForegroundLocationWatch({ enabled: foregroundEnabled });
 
 	const requestLocationPermission = async () => {
 		try {

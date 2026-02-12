@@ -45,12 +45,8 @@ export const setupBackgroundGeolocationConfig = async (): Promise<{
 				shouldDisableMotionActivityUpdates
 			) {
 				await BackgroundGeolocation.setConfig({
-					activity: {
-						disableMotionActivityUpdates: shouldDisableMotionActivityUpdates,
-					},
-					geolocation: {
-						stationaryRadius: 25,
-					},
+					disableMotionActivityUpdates: shouldDisableMotionActivityUpdates,
+					stationaryRadius: 25,
 				});
 
 				isLastDisableMotionActivityUpdates = shouldDisableMotionActivityUpdates;
@@ -69,49 +65,47 @@ export const setupBackgroundGeolocationConfig = async (): Promise<{
 		console.log("[BG Geolocation] Setting up BackgroundGeolocation");
 
 		const config: Config = {
-			geolocation: {
-				desiredAccuracy: BackgroundGeolocation.DesiredAccuracy.High,
-				distanceFilter: 50,
-				// Minimize stationary geofence radius - critical when motion API is disabled
-				// because the geofence becomes the only mechanism to detect movement
-				stationaryRadius: 25,
-				stopTimeout: 5,
-				disableElasticity: false,
-				allowIdenticalLocations: false,
-				locationAuthorizationRequest: "Any",
-				disableLocationAuthorizationAlert: true,
-				showsBackgroundLocationIndicator: false,
+			desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+			distanceFilter: 50,
+
+			// activity recognitison
+			stopTimeout: 5,
+			stopOnTerminate: false,
+			startOnBoot: true,
+			showsBackgroundLocationIndicator: false,
+			enableHeadless: true,
+			allowIdenticalLocations: false,
+			disableElasticity: false,
+			disableLocationAuthorizationAlert: true,
+			disableMotionActivityUpdates: shouldDisableMotionActivityUpdates,
+			foregroundService: true,
+			locationAuthorizationRequest: "Any",
+
+			// minimize stationary geofence radius for when critical when motion API is disabled
+			// because the geofence becomes the only mechanism to detect movement
+			stationaryRadius: 25,
+
+			// android foreground notification
+			notification: {
+				title: "Genasys Protect Location Updates",
+				text: "Your location is being tracked for safety updates",
+				channelName: "Location Updates",
+				smallIcon: "mipmap/ic_notification",
+				channelId: "location_updates",
+				priority: BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT,
 			},
-			activity: {
-				disableMotionActivityUpdates: shouldDisableMotionActivityUpdates,
+
+			backgroundPermissionRationale: {
+				title: "Background Location Permission",
+				message: "We need permission to track your location in the background",
+				positiveAction: "Go to Settings",
+				negativeAction: "Cancel",
 			},
-			app: {
-				stopOnTerminate: false,
-				startOnBoot: true,
-				enableHeadless: true,
-				notification: {
-					title: "Location Tracking Active",
-					text: "Your location is being tracked",
-					channelName: "Location Updates",
-					smallIcon: "mipmap/ic_launcher",
-					channelId: "location-tracking-channel",
-					priority: BackgroundGeolocation.NotificationPriority.Default,
-				},
-				backgroundPermissionRationale: {
-					title: "Allow background location access?",
-					message:
-						"This app needs background location access to function properly.",
-					positiveAction: "Go to Settings",
-					negativeAction: "Cancel",
-				},
-			},
-			logger: {
-				debug: false,
-				logLevel: BackgroundGeolocation.LogLevel.Info,
-			},
-			persistence: {
-				maxDaysToPersist: 1,
-			},
+
+			// debug - auto-enabled in non-production
+			debug: false,
+			logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+			maxDaysToPersist: 1,
 		};
 
 		await BackgroundGeolocation.ready(config);
